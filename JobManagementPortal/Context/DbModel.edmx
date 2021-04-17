@@ -1,0 +1,594 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="JobManagementDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tbl_contactus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="SenderName" Type="nvarchar" MaxLength="50" />
+          <Property Name="SenderEmail" Type="nvarchar" MaxLength="30" />
+          <Property Name="Message" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="tbl_disciplines">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="60" />
+        </EntityType>
+        <EntityType Name="tbl_employers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="company_name" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="company_location" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="company_description" Type="nvarchar" MaxLength="250" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_job_application">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="student_id" Type="int" />
+          <Property Name="job_id" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_job_disciplines">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="job_id" Type="int" />
+          <Property Name="discipline_id" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_student_disciplines">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="student_id" Type="int" />
+          <Property Name="discipline_id" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_students">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="cv" Type="nvarchar" MaxLength="50" />
+          <Property Name="profile_picture" Type="nvarchar" MaxLength="50" />
+          <Property Name="user_id" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="first_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="last_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="contact_num" Type="nvarchar" MaxLength="100" />
+          <Property Name="account_type" Type="nvarchar" MaxLength="100" />
+          <Property Name="address" Type="nvarchar" MaxLength="200" />
+          <Property Name="password" Type="nvarchar" MaxLength="70" />
+        </EntityType>
+        <EntityType Name="tbl_vacancies">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="post" Type="nvarchar" MaxLength="60" />
+          <Property Name="description" Type="nvarchar" MaxLength="200" />
+          <Property Name="location" Type="nvarchar" MaxLength="60" />
+          <Property Name="status" Type="nvarchar" MaxLength="30" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Table_ToTable">
+          <End Role="tbl_students" Type="Self.tbl_students" Multiplicity="0..1" />
+          <End Role="tbl_student_disciplines" Type="Self.tbl_student_disciplines" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_students">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_student_disciplines">
+              <PropertyRef Name="student_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_ToTable_1">
+          <End Role="tbl_disciplines" Type="Self.tbl_disciplines" Multiplicity="0..1" />
+          <End Role="tbl_student_disciplines" Type="Self.tbl_student_disciplines" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_disciplines">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_student_disciplines">
+              <PropertyRef Name="discipline_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_employers_ToTable">
+          <End Role="tbl_users" Type="Self.tbl_users" Multiplicity="1" />
+          <End Role="tbl_employers" Type="Self.tbl_employers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_employers">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_job_application_ToTable_1">
+          <End Role="tbl_vacancies" Type="Self.tbl_vacancies" Multiplicity="0..1" />
+          <End Role="tbl_job_application" Type="Self.tbl_job_application" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_vacancies">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_job_application">
+              <PropertyRef Name="job_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_job_disciplines_ToTable">
+          <End Role="tbl_vacancies" Type="Self.tbl_vacancies" Multiplicity="0..1" />
+          <End Role="tbl_job_disciplines" Type="Self.tbl_job_disciplines" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_vacancies">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_job_disciplines">
+              <PropertyRef Name="job_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_job_disciplines_ToTable_1">
+          <End Role="tbl_disciplines" Type="Self.tbl_disciplines" Multiplicity="0..1" />
+          <End Role="tbl_job_disciplines" Type="Self.tbl_job_disciplines" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_disciplines">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_job_disciplines">
+              <PropertyRef Name="discipline_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_students_ToTable">
+          <End Role="tbl_users" Type="Self.tbl_users" Multiplicity="0..1" />
+          <End Role="tbl_students" Type="Self.tbl_students" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_students">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_vacancies_ToTable">
+          <End Role="tbl_users" Type="Self.tbl_users" Multiplicity="1" />
+          <End Role="tbl_vacancies" Type="Self.tbl_vacancies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_vacancies">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="JobManagementDBModelStoreContainer">
+          <EntitySet Name="tbl_contactus" EntityType="Self.tbl_contactus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_disciplines" EntityType="Self.tbl_disciplines" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_employers" EntityType="Self.tbl_employers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_job_application" EntityType="Self.tbl_job_application" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_job_disciplines" EntityType="Self.tbl_job_disciplines" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_student_disciplines" EntityType="Self.tbl_student_disciplines" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_students" EntityType="Self.tbl_students" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_users" EntityType="Self.tbl_users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_vacancies" EntityType="Self.tbl_vacancies" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Table_ToTable" Association="Self.FK_Table_ToTable">
+            <End Role="tbl_students" EntitySet="tbl_students" />
+            <End Role="tbl_student_disciplines" EntitySet="tbl_student_disciplines" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_ToTable_1" Association="Self.FK_Table_ToTable_1">
+            <End Role="tbl_disciplines" EntitySet="tbl_disciplines" />
+            <End Role="tbl_student_disciplines" EntitySet="tbl_student_disciplines" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_employers_ToTable" Association="Self.FK_tbl_employers_ToTable">
+            <End Role="tbl_users" EntitySet="tbl_users" />
+            <End Role="tbl_employers" EntitySet="tbl_employers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_job_application_ToTable_1" Association="Self.FK_tbl_job_application_ToTable_1">
+            <End Role="tbl_vacancies" EntitySet="tbl_vacancies" />
+            <End Role="tbl_job_application" EntitySet="tbl_job_application" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_job_disciplines_ToTable" Association="Self.FK_tbl_job_disciplines_ToTable">
+            <End Role="tbl_vacancies" EntitySet="tbl_vacancies" />
+            <End Role="tbl_job_disciplines" EntitySet="tbl_job_disciplines" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_job_disciplines_ToTable_1" Association="Self.FK_tbl_job_disciplines_ToTable_1">
+            <End Role="tbl_disciplines" EntitySet="tbl_disciplines" />
+            <End Role="tbl_job_disciplines" EntitySet="tbl_job_disciplines" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_students_ToTable" Association="Self.FK_tbl_students_ToTable">
+            <End Role="tbl_users" EntitySet="tbl_users" />
+            <End Role="tbl_students" EntitySet="tbl_students" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_vacancies_ToTable" Association="Self.FK_tbl_vacancies_ToTable">
+            <End Role="tbl_users" EntitySet="tbl_users" />
+            <End Role="tbl_vacancies" EntitySet="tbl_vacancies" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="JobManagementDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tbl_contactus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="SenderName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SenderEmail" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Message" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbl_disciplines">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tbl_student_disciplines" Relationship="Self.FK_Table_ToTable_1" FromRole="tbl_disciplines" ToRole="tbl_student_disciplines" />
+          <NavigationProperty Name="tbl_job_disciplines" Relationship="Self.FK_tbl_job_disciplines_ToTable_1" FromRole="tbl_disciplines" ToRole="tbl_job_disciplines" />
+        </EntityType>
+        <EntityType Name="tbl_employers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="company_name" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="company_location" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="company_description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tbl_users" Relationship="Self.FK_tbl_employers_ToTable" FromRole="tbl_employers" ToRole="tbl_users" />
+        </EntityType>
+        <EntityType Name="tbl_job_application">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="student_id" Type="Int32" />
+          <Property Name="job_id" Type="Int32" />
+          <NavigationProperty Name="tbl_vacancies" Relationship="Self.FK_tbl_job_application_ToTable_1" FromRole="tbl_job_application" ToRole="tbl_vacancies" />
+        </EntityType>
+        <EntityType Name="tbl_job_disciplines">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="job_id" Type="Int32" />
+          <Property Name="discipline_id" Type="Int32" />
+          <NavigationProperty Name="tbl_disciplines" Relationship="Self.FK_tbl_job_disciplines_ToTable_1" FromRole="tbl_job_disciplines" ToRole="tbl_disciplines" />
+          <NavigationProperty Name="tbl_vacancies" Relationship="Self.FK_tbl_job_disciplines_ToTable" FromRole="tbl_job_disciplines" ToRole="tbl_vacancies" />
+        </EntityType>
+        <EntityType Name="tbl_student_disciplines">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="student_id" Type="Int32" />
+          <Property Name="discipline_id" Type="Int32" />
+          <NavigationProperty Name="tbl_disciplines" Relationship="Self.FK_Table_ToTable_1" FromRole="tbl_student_disciplines" ToRole="tbl_disciplines" />
+          <NavigationProperty Name="tbl_students" Relationship="Self.FK_Table_ToTable" FromRole="tbl_student_disciplines" ToRole="tbl_students" />
+        </EntityType>
+        <EntityType Name="tbl_students">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="cv" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="profile_picture" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="user_id" Type="Int32" />
+          <NavigationProperty Name="tbl_student_disciplines" Relationship="Self.FK_Table_ToTable" FromRole="tbl_students" ToRole="tbl_student_disciplines" />
+          <NavigationProperty Name="tbl_users" Relationship="Self.FK_tbl_students_ToTable" FromRole="tbl_students" ToRole="tbl_users" />
+        </EntityType>
+        <EntityType Name="tbl_users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="first_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="last_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="contact_num" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="account_type" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" MaxLength="70" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tbl_employers" Relationship="Self.FK_tbl_employers_ToTable" FromRole="tbl_users" ToRole="tbl_employers" />
+          <NavigationProperty Name="tbl_students" Relationship="Self.FK_tbl_students_ToTable" FromRole="tbl_users" ToRole="tbl_students" />
+          <NavigationProperty Name="tbl_vacancies" Relationship="Self.FK_tbl_vacancies_ToTable" FromRole="tbl_users" ToRole="tbl_vacancies" />
+        </EntityType>
+        <EntityType Name="tbl_vacancies">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="post" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="location" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="status" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tbl_job_application" Relationship="Self.FK_tbl_job_application_ToTable_1" FromRole="tbl_vacancies" ToRole="tbl_job_application" />
+          <NavigationProperty Name="tbl_job_disciplines" Relationship="Self.FK_tbl_job_disciplines_ToTable" FromRole="tbl_vacancies" ToRole="tbl_job_disciplines" />
+          <NavigationProperty Name="tbl_users" Relationship="Self.FK_tbl_vacancies_ToTable" FromRole="tbl_vacancies" ToRole="tbl_users" />
+        </EntityType>
+        <Association Name="FK_Table_ToTable_1">
+          <End Role="tbl_disciplines" Type="Self.tbl_disciplines" Multiplicity="0..1" />
+          <End Role="tbl_student_disciplines" Type="Self.tbl_student_disciplines" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_disciplines">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_student_disciplines">
+              <PropertyRef Name="discipline_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_job_disciplines_ToTable_1">
+          <End Role="tbl_disciplines" Type="Self.tbl_disciplines" Multiplicity="0..1" />
+          <End Role="tbl_job_disciplines" Type="Self.tbl_job_disciplines" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_disciplines">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_job_disciplines">
+              <PropertyRef Name="discipline_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_employers_ToTable">
+          <End Role="tbl_users" Type="Self.tbl_users" Multiplicity="1" />
+          <End Role="tbl_employers" Type="Self.tbl_employers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_employers">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_job_application_ToTable_1">
+          <End Role="tbl_vacancies" Type="Self.tbl_vacancies" Multiplicity="0..1" />
+          <End Role="tbl_job_application" Type="Self.tbl_job_application" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_vacancies">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_job_application">
+              <PropertyRef Name="job_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_job_disciplines_ToTable">
+          <End Role="tbl_vacancies" Type="Self.tbl_vacancies" Multiplicity="0..1" />
+          <End Role="tbl_job_disciplines" Type="Self.tbl_job_disciplines" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_vacancies">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_job_disciplines">
+              <PropertyRef Name="job_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_ToTable">
+          <End Role="tbl_students" Type="Self.tbl_students" Multiplicity="0..1" />
+          <End Role="tbl_student_disciplines" Type="Self.tbl_student_disciplines" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_students">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_student_disciplines">
+              <PropertyRef Name="student_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_students_ToTable">
+          <End Role="tbl_users" Type="Self.tbl_users" Multiplicity="0..1" />
+          <End Role="tbl_students" Type="Self.tbl_students" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_students">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_vacancies_ToTable">
+          <End Role="tbl_users" Type="Self.tbl_users" Multiplicity="1" />
+          <End Role="tbl_vacancies" Type="Self.tbl_vacancies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_vacancies">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="JobManagementDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tbl_contactus" EntityType="Self.tbl_contactus" />
+          <EntitySet Name="tbl_disciplines" EntityType="Self.tbl_disciplines" />
+          <EntitySet Name="tbl_employers" EntityType="Self.tbl_employers" />
+          <EntitySet Name="tbl_job_application" EntityType="Self.tbl_job_application" />
+          <EntitySet Name="tbl_job_disciplines" EntityType="Self.tbl_job_disciplines" />
+          <EntitySet Name="tbl_student_disciplines" EntityType="Self.tbl_student_disciplines" />
+          <EntitySet Name="tbl_students" EntityType="Self.tbl_students" />
+          <EntitySet Name="tbl_users" EntityType="Self.tbl_users" />
+          <EntitySet Name="tbl_vacancies" EntityType="Self.tbl_vacancies" />
+          <AssociationSet Name="FK_Table_ToTable_1" Association="Self.FK_Table_ToTable_1">
+            <End Role="tbl_disciplines" EntitySet="tbl_disciplines" />
+            <End Role="tbl_student_disciplines" EntitySet="tbl_student_disciplines" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_job_disciplines_ToTable_1" Association="Self.FK_tbl_job_disciplines_ToTable_1">
+            <End Role="tbl_disciplines" EntitySet="tbl_disciplines" />
+            <End Role="tbl_job_disciplines" EntitySet="tbl_job_disciplines" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_employers_ToTable" Association="Self.FK_tbl_employers_ToTable">
+            <End Role="tbl_users" EntitySet="tbl_users" />
+            <End Role="tbl_employers" EntitySet="tbl_employers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_job_application_ToTable_1" Association="Self.FK_tbl_job_application_ToTable_1">
+            <End Role="tbl_vacancies" EntitySet="tbl_vacancies" />
+            <End Role="tbl_job_application" EntitySet="tbl_job_application" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_job_disciplines_ToTable" Association="Self.FK_tbl_job_disciplines_ToTable">
+            <End Role="tbl_vacancies" EntitySet="tbl_vacancies" />
+            <End Role="tbl_job_disciplines" EntitySet="tbl_job_disciplines" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_ToTable" Association="Self.FK_Table_ToTable">
+            <End Role="tbl_students" EntitySet="tbl_students" />
+            <End Role="tbl_student_disciplines" EntitySet="tbl_student_disciplines" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_students_ToTable" Association="Self.FK_tbl_students_ToTable">
+            <End Role="tbl_users" EntitySet="tbl_users" />
+            <End Role="tbl_students" EntitySet="tbl_students" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_vacancies_ToTable" Association="Self.FK_tbl_vacancies_ToTable">
+            <End Role="tbl_users" EntitySet="tbl_users" />
+            <End Role="tbl_vacancies" EntitySet="tbl_vacancies" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="JobManagementDBModelStoreContainer" CdmEntityContainer="JobManagementDBEntities">
+          <EntitySetMapping Name="tbl_contactus">
+            <EntityTypeMapping TypeName="JobManagementDBModel.tbl_contactus">
+              <MappingFragment StoreEntitySet="tbl_contactus">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SenderName" ColumnName="SenderName" />
+                <ScalarProperty Name="SenderEmail" ColumnName="SenderEmail" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_disciplines">
+            <EntityTypeMapping TypeName="JobManagementDBModel.tbl_disciplines">
+              <MappingFragment StoreEntitySet="tbl_disciplines">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_employers">
+            <EntityTypeMapping TypeName="JobManagementDBModel.tbl_employers">
+              <MappingFragment StoreEntitySet="tbl_employers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="company_name" ColumnName="company_name" />
+                <ScalarProperty Name="company_location" ColumnName="company_location" />
+                <ScalarProperty Name="company_description" ColumnName="company_description" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_job_application">
+            <EntityTypeMapping TypeName="JobManagementDBModel.tbl_job_application">
+              <MappingFragment StoreEntitySet="tbl_job_application">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="student_id" ColumnName="student_id" />
+                <ScalarProperty Name="job_id" ColumnName="job_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_job_disciplines">
+            <EntityTypeMapping TypeName="JobManagementDBModel.tbl_job_disciplines">
+              <MappingFragment StoreEntitySet="tbl_job_disciplines">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="job_id" ColumnName="job_id" />
+                <ScalarProperty Name="discipline_id" ColumnName="discipline_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_student_disciplines">
+            <EntityTypeMapping TypeName="JobManagementDBModel.tbl_student_disciplines">
+              <MappingFragment StoreEntitySet="tbl_student_disciplines">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="student_id" ColumnName="student_id" />
+                <ScalarProperty Name="discipline_id" ColumnName="discipline_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_students">
+            <EntityTypeMapping TypeName="JobManagementDBModel.tbl_students">
+              <MappingFragment StoreEntitySet="tbl_students">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="cv" ColumnName="cv" />
+                <ScalarProperty Name="profile_picture" ColumnName="profile_picture" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_users">
+            <EntityTypeMapping TypeName="JobManagementDBModel.tbl_users">
+              <MappingFragment StoreEntitySet="tbl_users">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="contact_num" ColumnName="contact_num" />
+                <ScalarProperty Name="account_type" ColumnName="account_type" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_vacancies">
+            <EntityTypeMapping TypeName="JobManagementDBModel.tbl_vacancies">
+              <MappingFragment StoreEntitySet="tbl_vacancies">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="post" ColumnName="post" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="location" ColumnName="location" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

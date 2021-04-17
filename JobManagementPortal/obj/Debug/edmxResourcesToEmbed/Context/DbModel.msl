@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="JobManagementDBModelStoreContainer" CdmEntityContainer="JobManagementDBEntities">
+    <EntitySetMapping Name="tbl_contactus">
+      <EntityTypeMapping TypeName="JobManagementDBModel.tbl_contactus">
+        <MappingFragment StoreEntitySet="tbl_contactus">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="SenderName" ColumnName="SenderName" />
+          <ScalarProperty Name="SenderEmail" ColumnName="SenderEmail" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_disciplines">
+      <EntityTypeMapping TypeName="JobManagementDBModel.tbl_disciplines">
+        <MappingFragment StoreEntitySet="tbl_disciplines">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_employers">
+      <EntityTypeMapping TypeName="JobManagementDBModel.tbl_employers">
+        <MappingFragment StoreEntitySet="tbl_employers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="company_name" ColumnName="company_name" />
+          <ScalarProperty Name="company_location" ColumnName="company_location" />
+          <ScalarProperty Name="company_description" ColumnName="company_description" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_job_application">
+      <EntityTypeMapping TypeName="JobManagementDBModel.tbl_job_application">
+        <MappingFragment StoreEntitySet="tbl_job_application">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="student_id" ColumnName="student_id" />
+          <ScalarProperty Name="job_id" ColumnName="job_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_job_disciplines">
+      <EntityTypeMapping TypeName="JobManagementDBModel.tbl_job_disciplines">
+        <MappingFragment StoreEntitySet="tbl_job_disciplines">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="job_id" ColumnName="job_id" />
+          <ScalarProperty Name="discipline_id" ColumnName="discipline_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_student_disciplines">
+      <EntityTypeMapping TypeName="JobManagementDBModel.tbl_student_disciplines">
+        <MappingFragment StoreEntitySet="tbl_student_disciplines">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="student_id" ColumnName="student_id" />
+          <ScalarProperty Name="discipline_id" ColumnName="discipline_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_students">
+      <EntityTypeMapping TypeName="JobManagementDBModel.tbl_students">
+        <MappingFragment StoreEntitySet="tbl_students">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="cv" ColumnName="cv" />
+          <ScalarProperty Name="profile_picture" ColumnName="profile_picture" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_users">
+      <EntityTypeMapping TypeName="JobManagementDBModel.tbl_users">
+        <MappingFragment StoreEntitySet="tbl_users">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="first_name" ColumnName="first_name" />
+          <ScalarProperty Name="last_name" ColumnName="last_name" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="contact_num" ColumnName="contact_num" />
+          <ScalarProperty Name="account_type" ColumnName="account_type" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="password" ColumnName="password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_vacancies">
+      <EntityTypeMapping TypeName="JobManagementDBModel.tbl_vacancies">
+        <MappingFragment StoreEntitySet="tbl_vacancies">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="post" ColumnName="post" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="location" ColumnName="location" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
